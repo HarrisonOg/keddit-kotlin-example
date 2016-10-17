@@ -3,7 +3,7 @@ package com.harrisonog.kedditkotlin.features.news
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.ActionBarContainer
-import android.support.v7.widget.RecyclerView
+//import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 
 import com.harrisonog.kedditkotlin.R
 import com.harrisonog.kedditkotlin.commons.inflate
+import com.harrisonog.kedditkotlin.features.news.adapter.NewsAdapter
 
 import kotlinx.android.synthetic.main.news_fragment.*
 
@@ -40,5 +41,13 @@ class NewsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        if (newsList.adapter == null) {
+            newsList.adapter = NewsAdapter()
+        }
     }
 }
