@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.harrisonog.kedditkotlin.R
+import com.harrisonog.kedditkotlin.commons.RedditNewsItem
 import com.harrisonog.kedditkotlin.commons.extensions.inflate
 import com.harrisonog.kedditkotlin.features.news.adapter.NewsAdapter
 
@@ -43,6 +44,21 @@ class NewsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initAdapter()
+
+        if (savedInstanceState == null) {
+            val news = mutableListOf<RedditNewsItem>()
+            for (i in 1..10){
+                news.add(RedditNewsItem(
+                        "author$i",
+                        "Title $i",
+                        i,
+                        1457207701L - i * 200,
+                        "http://lorempixel.com/200/200/technics/$i", // image url
+                        "url"
+                ))
+            }
+            (newsList.adapter as NewsAdapter).addNews(news)
+        }
     }
 
     private fun initAdapter() {

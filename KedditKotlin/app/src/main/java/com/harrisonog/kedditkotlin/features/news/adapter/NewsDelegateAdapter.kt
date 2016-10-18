@@ -2,6 +2,7 @@ package com.harrisonog.kedditkotlin.features.news.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+
 import com.harrisonog.kedditkotlin.commons.RedditNewsItem
 import com.harrisonog.kedditkotlin.commons.adapter.ViewType
 import com.harrisonog.kedditkotlin.commons.adapter.ViewTypeDelegateAdapter
@@ -9,6 +10,7 @@ import com.harrisonog.kedditkotlin.commons.extensions.inflate
 import com.harrisonog.kedditkotlin.R
 import com.harrisonog.kedditkotlin.commons.extensions.getFriendlyTime
 import com.harrisonog.kedditkotlin.commons.extensions.loadImg
+
 import kotlinx.android.synthetic.main.news_item.view.*
 
 /**
