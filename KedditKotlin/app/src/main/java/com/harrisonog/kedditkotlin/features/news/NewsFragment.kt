@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.harrisonog.kedditkotlin.R
-import com.harrisonog.kedditkotlin.commons.inflate
+import com.harrisonog.kedditkotlin.commons.extensions.inflate
 import com.harrisonog.kedditkotlin.features.news.adapter.NewsAdapter
 
 import kotlinx.android.synthetic.main.news_fragment.*

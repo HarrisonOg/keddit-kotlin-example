@@ -7,7 +7,7 @@ import android.view.ViewParent
 import com.harrisonog.kedditkotlin.commons.adapter.ViewType
 import com.harrisonog.kedditkotlin.commons.adapter.ViewTypeDelegateAdapter
 import com.harrisonog.kedditkotlin.R
-import com.harrisonog.kedditkotlin.commons.inflate
+import com.harrisonog.kedditkotlin.commons.extensions.inflate
 
 /**
  * Created by harrisonoglesby on 10/17/16.
