@@ -2,8 +2,6 @@ package com.harrisonog.kedditkotlin.features.news
 
 import android.os.Bundle
 import android.widget.Toast
-//import android.support.v4.app.Fragment
-import android.support.v7.widget.ActionBarContainer
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,6 @@ import android.view.ViewGroup
 
 import com.harrisonog.kedditkotlin.R
 import com.harrisonog.kedditkotlin.commons.RxBaseFragment
-import com.harrisonog.kedditkotlin.commons.RedditNewsItem
 import com.harrisonog.kedditkotlin.commons.extensions.inflate
 import com.harrisonog.kedditkotlin.features.news.adapter.NewsAdapter
 
@@ -60,7 +57,7 @@ class NewsFragment : RxBaseFragment() {
         // (news_list.adapter as NewsAdapter).addNews(news)
         val subscription = newsManager.getNews()
             .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                     {  retrievedNews ->
                         (news_list.adapter as NewsAdapter).addNews(retrievedNews)
