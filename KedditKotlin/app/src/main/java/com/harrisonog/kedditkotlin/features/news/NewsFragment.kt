@@ -1,27 +1,33 @@
 package com.harrisonog.kedditkotlin.features.news
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.widget.Toast
+//import android.support.v4.app.Fragment
 import android.support.v7.widget.ActionBarContainer
-//import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.harrisonog.kedditkotlin.R
+import com.harrisonog.kedditkotlin.commons.RxBaseFragment
 import com.harrisonog.kedditkotlin.commons.RedditNewsItem
 import com.harrisonog.kedditkotlin.commons.extensions.inflate
 import com.harrisonog.kedditkotlin.features.news.adapter.NewsAdapter
 
 import kotlinx.android.synthetic.main.news_fragment.*
 
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+
 /**
  * Created by harrisonoglesby on 10/17/16.
  */
-class NewsFragment : Fragment() {
+class NewsFragment : RxBaseFragment() {
 
     //private var newsList: RecyclerView? = null
+
+    private val newsManager by lazy { NewsManager() }
 
     private val newsList by lazy {
         news_list.setHasFixedSize(true)
@@ -46,19 +52,24 @@ class NewsFragment : Fragment() {
         initAdapter()
 
         if (savedInstanceState == null) {
-            val news = mutableListOf<RedditNewsItem>()
-            for (i in 1..10){
-                news.add(RedditNewsItem(
-                        "author$i",
-                        "Title $i",
-                        i,
-                        1457207701L - i * 200,
-                        "http://lorempixel.com/200/200/technics/$i", // image url
-                        "url"
-                ))
-            }
-            (newsList.adapter as NewsAdapter).addNews(news)
+            requestNews()
         }
+    }
+
+    private fun requestNews() {
+        // (news_list.adapter as NewsAdapter).addNews(news)
+        val subscription = newsManager.getNews()
+            .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    {  retrievedNews ->
+                        (news_list.adapter as NewsAdapter).addNews(retrievedNews)
+                    },
+                    {  e ->
+                        Toast.makeText(context, e.message ?: "", Toast.LENGTH_LONG).show()
+                    }
+            )
+        subscriptions.add(subscription)
     }
 
     private fun initAdapter() {
