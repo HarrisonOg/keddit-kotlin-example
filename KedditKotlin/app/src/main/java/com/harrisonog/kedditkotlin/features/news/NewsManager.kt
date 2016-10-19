@@ -2,7 +2,8 @@ package com.harrisonog.kedditkotlin.features.news
 
 
 import com.harrisonog.kedditkotlin.commons.RedditNewsItem
-import com.harrisonog.kedditkotlin.api.RestAPI
+import com.harrisonog.kedditkotlin.api.NewsRestAPI
+import com.harrisonog.kedditkotlin.api.NewsAPI
 import com.harrisonog.kedditkotlin.commons.RedditNews
 
 import rx.Observable
@@ -12,7 +13,7 @@ import rx.Observable
  *
  * Created by harrisonoglesby on 10/17/16.
  */
-class NewsManager(private val api: RestAPI = RestAPI()) {
+class NewsManager(private val api: NewsAPI = NewsRestAPI()) {
 
     fun getNews(after: String, limit: String = "10"): Observable<RedditNews> {
         return Observable.create {

@@ -50,7 +50,7 @@ class NewsFragment : RxBaseFragment() {
 
         initAdapter()
 
-        if (savedInstanceState == null && savedInstanceState.containsKey(KEY_REDDIT_NEWS)) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_REDDIT_NEWS)) {
             redditNews = savedInstanceState.get(KEY_REDDIT_NEWS) as RedditNews
             (news_list.adapter as NewsAdapter).clearAndAddNews(redditNews!!.news)
             requestNews()
