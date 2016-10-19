@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.harrisonog.kedditkotlin.R
+import com.harrisonog.kedditkotlin.commons.InfiniteScrollListener
+import com.harrisonog.kedditkotlin.commons.RedditNews
 import com.harrisonog.kedditkotlin.commons.RxBaseFragment
 import com.harrisonog.kedditkotlin.commons.extensions.inflate
 import com.harrisonog.kedditkotlin.features.news.adapter.NewsAdapter
@@ -23,22 +25,20 @@ import rx.schedulers.Schedulers
 class NewsFragment : RxBaseFragment() {
 
     //private var newsList: RecyclerView? = null
-
+    private var redditNews: RedditNews? = null
     private val newsManager by lazy { NewsManager() }
 
     private val newsList by lazy {
         news_list.setHasFixedSize(true)
-        news_list.layoutManager = LinearLayoutManager(context)
+        //news_list.layoutManager = LinearLayoutManager(context)
+        val linearLayout = LinearLayoutManager(context)
+        news_list.layoutManager = linearLayout
+        news_list.clearOnScrollListeners()
+        news_list.addOnScrollListener(InfiniteScrollListener({ requestNews()}, linearLayout))
         news_list
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
-        //val view = inflater.inflate(R.layout.news_fragment, container, false)
-        //val view = container?.inflate(R.layout.news_fragment)
-
-//        newsList = view?.findViewById(R.id.news_list) as RecyclerView?
-//        newsList?.setHasFixedSize(true) //use this setting to improve performance
-//        newsList?.layoutManager = LinearLayoutManager(context)
 
         return container?.inflate(R.layout.news_fragment)
     }
@@ -55,12 +55,16 @@ class NewsFragment : RxBaseFragment() {
 
     private fun requestNews() {
         // (news_list.adapter as NewsAdapter).addNews(news)
-        val subscription = newsManager.getNews()
+        /**
+         * Empty after String for now
+         */
+        val subscription = newsManager.getNews(redditNews?.after ?: "")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                     {  retrievedNews ->
-                        (news_list.adapter as NewsAdapter).addNews(retrievedNews)
+                        redditNews = retrievedNews
+                        (news_list.adapter as NewsAdapter).addNews(retrievedNews.news)
                     },
                     {  e ->
                         Toast.makeText(context, e.message ?: "", Toast.LENGTH_LONG).show()

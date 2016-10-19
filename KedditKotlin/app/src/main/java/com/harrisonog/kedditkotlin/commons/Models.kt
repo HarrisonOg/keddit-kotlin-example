@@ -16,3 +16,8 @@ data class RedditNewsItem(
 ) : ViewType {
     override fun getViewType() = AdapterConstants.NEWS
 }
+
+data class RedditNews(
+        val after: String,
+        val before: String,
+        val news: List<RedditNewsItem>)
